@@ -1,0 +1,2611 @@
+{
+	"info": {
+		"_postman_id": "9e1ae632-741e-427e-befa-db85e5398bc3",
+		"name": "Main",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Login Controller",
+			"item": [
+				{
+					"name": "Post User login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98dc40b7-16bd-4c27-88d1-48c34437007d",
+								"exec": [
+									"// pm.test(\"Status code is 200\", function () {\r",
+									"//     pm.response.to.have.status(200);\r",
+									"// });\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"var Token = response.token;\r",
+									"//console.log(Token);\r",
+									"\r",
+									"pm.collectionVariables.set(\"token\",Token);\r",
+									"\r",
+									"if(pm.response.code!==200){\r",
+									"    postman.setNextRequest(\"next\");\r",
+									"}\r",
+									" \r",
+									"var response_statuscode = pm.iterationData.get(\"ExpectedLoginStatus\");\r",
+									"\r",
+									"pm.test('Validate response', function(){\r",
+									"    pm.response.to.have.status(response_statuscode);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//Schema validation\r",
+									"\r",
+									"const schema={\r",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"email\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"roles\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"string\"\r",
+									"      }\r",
+									"    },\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"token\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"type\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"userId\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"email\", \"roles\", \"status\", \"token\", \"type\", \"userId\"]\r",
+									"}\r",
+									" pm.test('Validate schema',()=>{\r",
+									"        pm.response.to.have.jsonSchema(schema);\r",
+									"    });\r",
+									"\r",
+									"//validate data\r",
+									"\r",
+									"pm.test(\"Validate data\"),()=>{\r",
+									"    pm.response.to.have.email(pm.iterationData.get(\"loginld\"));\r",
+									"   const userdata = pm.response.json();\r",
+									"    // Validate Token\r",
+									"if (!userData.token || typeof userData.token !== 'string') {\r",
+									"    console.error('Invalid token');\r",
+									"}\r",
+									"\r",
+									"// Validate Type\r",
+									"if (userData.type !== 'Bearer') {\r",
+									"    console.error('Invalid type');\r",
+									"}\r",
+									"\r",
+									"// Validate User ID\r",
+									"if (!userData.userId || typeof userData.userId !== 'string') {\r",
+									"    console.error('Invalid user ID');\r",
+									"}\r",
+									"\r",
+									"// Validate Email (Simple regex for demonstration purposes)\r",
+									"const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\r",
+									"if (!userData.email || !emailRegex.test(userData.email)) {\r",
+									"    console.error('Invalid email');\r",
+									"}\r",
+									"\r",
+									"// Validate Roles\r",
+									"if (!userData.roles || !Array.isArray(userData.roles) || userData.roles.length === 0) {\r",
+									"    console.error('Invalid roles');\r",
+									"} else {\r",
+									"    userData.roles.forEach(role => {\r",
+									"        // Validate each role if needed\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"// Validate Status\r",
+									"if (userData.status !== 'Active' && userData.status !== 'Inactive') {\r",
+									"    console.error('Invalid status');\r",
+									"}\r",
+									"    };\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "21038ca2-07c3-44ad-9340-323134d0fb09",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c3fe510e-803b-49ca-ac74-3d18b77d2a1c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"{{password}}\",\r\n  \"userLoginEmailId\": \"{{loginId}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{Baseurl}}/{{loginEndpoint}}"
+					},
+					"response": []
+				}
+			],
+			"id": "b4017433-4ad3-46d2-9c32-de10bb816bf9"
+		},
+		{
+			"name": "User Controller",
+			"item": [
+				{
+					"name": "create new user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "898650eb-d1ea-4548-b128-18657e34daf2",
+								"exec": [
+									"//FirstName = TeamName_serialNumber\r",
+									"\r",
+									"\r",
+									"var teamname = \"PostmanChamps\";\r",
+									"\r",
+									"const serialnumber = Math.floor((Math.random()*100+1));\r",
+									"\r",
+									"const phonenumber = Math.floor(Math.random()*1000000000);\r",
+									"pm.collectionVariables.set(\"teamname\",teamname);\r",
+									"pm.collectionVariables.set(\"serialnumber\",serialnumber);\r",
+									"pm.collectionVariables.set(\"phonenumber\",phonenumber);\r",
+									"var userPassword = pm.iterationData.get(\"userPassword\");\r",
+									"pm.collectionVariables.set(\"userPW\",userPassword);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "94f70584-7ac0-4ebf-a206-d8d2cb5cfeda",
+								"exec": [
+									"\r",
+									"const response = pm.response.json();\r",
+									"var createduserId = response.userId;\r",
+									"var userLoginEmail = response.userLoginEmail;\r",
+									"pm.collectionVariables.set(\"createduserId\",createduserId);\r",
+									"pm.collectionVariables.set(\"userLoginEmail\",userLoginEmail);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"// if(pm.response.code !==201){\r",
+									"// postman.setNextRequest(\"next\");\r",
+									"// }\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"var createduserId = response.userId;\r",
+									"\r",
+									"\r",
+									"pm.collectionVariables.set(\"createduserId\",createduserId);\r",
+									"\r",
+									"// if(pm.response.code!==201){\r",
+									"//     postman.setNextRequest(\"next\");\r",
+									"// }\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==201){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"Created\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//Schema validation\r",
+									"\r",
+									"const schema={\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"userId\": { \"type\": \"string\" },\r",
+									"        \"userFirstName\": { \"type\": \"string\" },\r",
+									"        \"userLastName\": { \"type\": \"string\" },\r",
+									"        \"userMiddleName\": { \"type\": \"string\" },\r",
+									"        \"userPhoneNumber\": { \"type\": \"integer\" },\r",
+									"        \"userLocation\": { \"type\": \"string\" },\r",
+									"        \"userTimeZone\": { \"type\": \"string\" },\r",
+									"        \"userLinkedinUrl\": { \"type\": \"string\", \"format\": \"uri\" },\r",
+									"        \"userEduUg\": { \"type\": \"string\" },\r",
+									"        \"userEduPg\": { \"type\": \"string\" },\r",
+									"        \"userComments\": { \"type\": \"string\" },\r",
+									"        \"userVisaStatus\": { \"type\": \"string\" },\r",
+									"        \"userLoginEmail\": { \"type\": \"string\", \"format\": \"email\" }\r",
+									"    },\r",
+									"    \"required\": [\"userId\", \"userFirstName\", \"userLastName\", \"userPhoneNumber\", \"userLoginEmail\"]\r",
+									"}\r",
+									"\r",
+									" pm.test('Validate schema',()=>{\r",
+									"        pm.response.to.have.jsonSchema(schema);\r",
+									"    });\r",
+									"\r",
+									"//validate data\r",
+									"\r",
+									"pm.test(\"Validate data\"),()=>{\r",
+									"    pm.response.to.have.userFirstName(pm.collectionVariables.get(\"teamname\"));\r",
+									"   \r",
+									"};\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "49159ba6-b9a7-4556-8b85-dc9af65f81d9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userComments\": \"{{comments}}\",\r\n  \"userEduPg\": \"{{EDU PG}}\",\r\n  \"userEduUg\": \"{{EDU UG}}\",\r\n  \"userFirstName\": \"{{teamname}}\",\r\n  \"userId\": \"string\",\r\n  \"userLastName\": \"{{lastname}}\",\r\n  \"userLinkedinUrl\": \"{{linkedinUrl}}\",\r\n  \"userLocation\": \"1234\",\r\n  \"userLogin\": {\r\n    \"loginStatus\": \"123\",\r\n    \"password\": \"{{userPassword}}\",\r\n    \"roleIds\": [\r\n      \"string\"\r\n    ],\r\n    \"status\": \"string\",\r\n    \"userLoginEmail\": \"{{userEmailId}}\"\r\n  },\r\n  \"userMiddleName\": \"{{middlename}}\",\r\n  \"userPhoneNumber\": {{phonenumber}},\r\n  \"userRoleMaps\": [\r\n    {\r\n      \"roleId\": \"{{roleId}}\",\r\n      \"userRoleStatus\": \"{{rolestatus}}\"\r\n    }\r\n  ],\r\n  \"userTimeZone\": \"{{timezone}}\",\r\n  \"userVisaStatus\": \"{{visastatus}}\"\r\n}\r\n\r\n\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Add new program",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd179867-78f5-42cd-9ad0-657c1bbf88d2",
+								"exec": [
+									"\r",
+									"const statuscode =pm.response.code;\r",
+									"\r",
+									"\r",
+									"\r",
+									"     pm.test(\"Status code is \"+statuscode+\" \"+pm.response.status,()=>{\r",
+									"        pm.expect(statuscode).to.be.oneOf([201,202]);\r",
+									"    });\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"var createdprogramId= response.programId;\r",
+									"//console.log(createdprogramId);\r",
+									"pm.collectionVariables.set(\"programId\",createdprogramId);\r",
+									"var createdprogramName= response.programName;\r",
+									"pm.collectionVariables.set(\"programName\",createdprogramName);\r",
+									"\r",
+									"\r",
+									"// if(pm.response.code !==201){\r",
+									"// postman.setNextRequest(\"next\");\r",
+									"// }\r",
+									"if(statuscode == 201){\r",
+									"// schema validation\r",
+									"const expectedSchema = {\r",
+									"    type: \"object\",\r",
+									"    properties: {\r",
+									"        programId: { type: \"number\" },\r",
+									"        programName: { type: \"string\" },\r",
+									"        programDescription: { type: \"string\" },\r",
+									"        programStatus: { type: \"string\", enum: [\"Active\", \"Inactive\"] },\r",
+									"        creationTime: { type: \"string\", format: \"date-time\" },\r",
+									"        lastModTime: { type: \"string\", format: \"date-time\" }\r",
+									"    },\r",
+									"    required: [\"programId\", \"programName\", \"programDescription\", \"programStatus\", \"creationTime\", \"lastModTime\"]\r",
+									"};\r",
+									"\r",
+									"\r",
+									"pm.test(\"Schema is valid\", function() {\r",
+									"    pm.response.to.have.jsonSchema(expectedSchema);\r",
+									"});\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9e2b1e52-3926-46cc-84be-614cd92c84a7",
+								"exec": [
+									"var programName = \"March24-PostmanChamps-SDET\";\r",
+									"const serialnumber = Math.floor((Math.random()*1000+1));\r",
+									"pm.collectionVariables.set(\"programName\",programName);\r",
+									"pm.collectionVariables.set(\"serialnumber\",serialnumber);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a3035aa2-0090-41a3-a8d9-22f2689294d3",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"programDescription\": \"{{programDesc}}\",\r\n  \"programName\": \"{{programName}}-{{serialnumber}}\",\r\n  \"programStatus\": \"{{programStatus}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/saveprogram"
+					},
+					"response": []
+				},
+				{
+					"name": "Post create new batch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6e7fefe8-0f90-4eff-b47a-770f27518d34",
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const statuscode =pm.response.code;\r",
+									"\r",
+									"\r",
+									"\r",
+									"     pm.test(\"Status code is \"+statuscode+\" \"+pm.response.status,()=>{\r",
+									"        pm.expect(statuscode).to.be.oneOf([201,202]);\r",
+									"    });\r",
+									"\r",
+									"\r",
+									"\r",
+									"var batchId = response.batchId;\r",
+									"var batchName = response.batchName;\r",
+									"pm.collectionVariables.set(\"batchId\",batchId);\r",
+									"pm.collectionVariables.set(\"batchName\",batchName);\r",
+									"\r",
+									"\r",
+									"if(pm.response.code !==201){\r",
+									"postman.setNextRequest(\"next\");\r",
+									"}\r",
+									"\r",
+									"// schema validation\r",
+									"\r",
+									"if (statuscode ==201){\r",
+									"const expectedSchema = {\r",
+									"    type: \"object\",\r",
+									"    properties: {\r",
+									"        batchId: { type: \"number\" },\r",
+									"        batchName: { type: \"string\" },\r",
+									"        batchDescription: { type: \"string\" },\r",
+									"        batchStatus: { type: \"string\", enum: [\"Active\", \"Inactive\"] },\r",
+									"        batchNoOfClasses: { type: \"number\" },\r",
+									"        programId: { type: \"number\" },\r",
+									"        programName: { type: \"string\" }\r",
+									"    },\r",
+									"    required: [\"batchId\", \"batchName\", \"batchDescription\", \"batchStatus\", \"batchNoOfClasses\", \"programId\", \"programName\"]\r",
+									"};\r",
+									"\r",
+									"\r",
+									"pm.test(\"Schema is valid\", function() {\r",
+									"    pm.response.to.have.jsonSchema(expectedSchema);\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "9941022c-4f94-4651-a6ff-dee748cf6445",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"batchDescription\": \"{{batchDescription}}\",\r\n  \"batchName\": \"{{batchName}}\",\r\n  \"batchNoOfClasses\": {{batchNoOfClasses}},\r\n  \"batchStatus\": \"{{batchStatus}}\",\r\n  \"programId\": {{programId}}\r\n }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/batches"
+					},
+					"response": []
+				},
+				{
+					"name": "/users/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "097c4a9f-030f-4bac-8b5d-6c9f5f436398",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"var createdroleId = response.roles[0].roleId;\r",
+									"pm.collectionVariables.set(\"roleId\",createdroleId);\r",
+									"console.log(createdroleId);\r",
+									"\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b6bb6312-f4dd-45e0-b5a7-c17bb25ae467",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/{{createduserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "/users/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "290ecc3c-2483-4639-b212-3f966b69440e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ee0b38ce-2e50-4397-9a68-2345b8b37e58",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userComments\": \"{{comments}}\",\r\n  \"userEduPg\": \"{{EDU UG}}\",\r\n  \"userEduUg\": \"{{EDU PG}}\",\r\n  \"userFirstName\": \"{{teamname}}\",\r\n  \"userId\": \"{{createduserId}}\",\r\n  \"userLastName\": \"{{updateLastname}}\",\r\n \"userMiddleName\": \"{{middlename}}\",\r\n  \"userLinkedinUrl\": \"{{linkedinUrl}}\",\r\n  \"userLocation\": \"String\",\r\n   \"userPhoneNumber\": {{phonenumber}},\r\n  \"userTimeZone\": \"{{timezone}}\",\r\n  \"userVisaStatus\": \"{{visastatus}}\"\r\n}\r\n\r\n\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/users/{{createduserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "/users/roleStatus/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "353b623f-d9df-4af6-8597-881df7d55b0d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "86f3769f-3357-496a-97f8-961185db64e3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"roleId\": \"{{roleId}}\",\r\n  \"userRoleStatus\": \"{{rolestatus}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/users/roleStatus/{{createduserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Login Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e44e4917-7c49-409b-882b-23d9324739e9",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "447bb37b-aa52-48c4-828a-20bed0fefc44",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"loginStatus\": \"Active\",\r\n  \"password\": \"{{{{updatedPassword}}}}\",\r\n  \"roleIds\": [\r\n    \"{{roleId}}\"\r\n  ],\r\n  \"status\": \"active\",\r\n  \"userLoginEmail\": \"{{userLoginEmail}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/users/userLogin/{{createduserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User RoleID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2fe4266b-84ed-4aa6-9e94-d92a7f31d980",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f6f07c57-7778-4fe8-9bb6-3352c206c80a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userRoleList\": [\r\n    \"{{assignedRoleId}}\"\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/users/roleId/{{createduserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Update User Role Program Batch Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2cdbbd2d-8add-4e79-bbc3-4b29bced4237",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "2c1b6026-3e14-422e-bfa1-fecbf206126a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n {\r\n  \"programId\": {{programId}},\r\n  \"roleId\": \"{{assignedRoleId}}\",\r\n  \"userRoleProgramBatches\": [\r\n    {\r\n      \"batchId\": {{batchId}},\r\n      \"userRoleProgramBatchStatus\": \"Active\"\r\n    }\r\n  ]\r\n}\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/users/roleProgramBatchStatus/{{createduserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update by program name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e2663e00-241b-4046-a198-f82dd9f0fbc7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "363adb7d-6637-4471-afda-bb4713766f54",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"programDescription\": \"{{updatedProgramDesc}}\",\r\n  \"programName\": \"{{programName}}\",\r\n  \"programStatus\": \"{{programStatus}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/program/{{programName}}"
+					},
+					"response": []
+				},
+				{
+					"name": "update batchid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "18e3e7a1-589e-48e4-9629-89b0d8dce3f3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "310d1b9f-5453-444f-873b-4f603d0c1e0c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"batchDescription\": \"{{updatedBatchDesc}}\",\n  \"batchId\": {{batchId}},\n  \"batchName\": \"{{batchName}}-{{$randomInt}}\",\n  \"batchNoOfClasses\": {{batchNoOfClasses}},\n  \"batchStatus\": \"{{batchStatus}}\",\n  \"programId\": {{programId}},\n  \"programName\": \"{{programName}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://lms-marchapi-hackathon-a258d2bbd43b.herokuapp.com/lms/batches/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "update batchName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d13368d-2bd5-4dfd-a0cf-9405693a939f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "dceda11b-3eda-4e08-9d9c-d83420d0f895",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"batchDescription\": \"{{updatedBatchDesc}}\",\n  \"batchId\": {{batchId}},\n  \"batchName\": \"{{batchName}}\",\n  \"batchNoOfClasses\": {{batchNoOfClasses}},\n  \"batchStatus\": \"{{batchStatus}}\",\n  \"programId\": {{programId}},\n  \"programName\": \"{{programName}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://lms-marchapi-hackathon-a258d2bbd43b.herokuapp.com/lms/batches/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "update pgmId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8a5531a9-6b96-48fd-93e9-bf58afd68339",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "814b08f6-5d26-4890-b484-69584d408c31",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"batchDescription\": \"{{updatedBatchDesc}}\",\n  \"batchId\": {{batchId}},\n  \"batchName\": \"{{batchName}}\",\n  \"batchNoOfClasses\": {{batchNoOfClasses}},\n  \"batchStatus\": \"{{batchStatus}}\",\n  \"programId\": {{programId}},\n  \"programName\": \"{{programName}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://lms-marchapi-hackathon-a258d2bbd43b.herokuapp.com/lms/batches/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8a8a0772-4ec2-4138-86c5-40c71ef51b29",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"}); \r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "386f5f87-c2e7-45d4-a214-a22125c28671",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/roles"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all roles  with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8a8a0772-4ec2-4138-86c5-40c71ef51b29",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"}); \r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1e13b031-8527-4416-90e4-d33367585761",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/123"
+					},
+					"response": []
+				},
+				{
+					"name": "/users Get all Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "05c1ff43-0abd-47e7-84c3-ac72ff0383c2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "4251d8d2-abe2-47c6-8867-697b67e5880d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users"
+					},
+					"response": []
+				},
+				{
+					"name": "/users Get all Users with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d5f25055-8d31-4928-b54c-2c8d401bc55a",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "909a431a-e346-43b5-8ee6-e17da69ba94f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/us"
+					},
+					"response": []
+				},
+				{
+					"name": "/users/activeUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "123479ad-55fb-4dd3-9a09-a833903a078f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e94f8335-f397-4d6c-bd96-7f79950fe4ac",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/activeUsers"
+					},
+					"response": []
+				},
+				{
+					"name": "/users/activeUsers invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d59087a5-428f-496c-82f3-30587b5a1c69",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6125c702-23d8-433e-aa85-0226da5614bf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/active"
+					},
+					"response": []
+				},
+				{
+					"name": "/users/byStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f10f636c-a900-4e9a-b7c2-4c1e6477fc2c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "85f0aaad-0236-40a6-9d10-87c4e788ad22",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/byStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "/users/byStatus invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5df34410-04b5-468a-ac77-0426d83b110a",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "152c0454-db66-4b50-8eb5-0bb417f565c0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/byStatu"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by batchId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ce04306-3c4b-422f-9450-5b21d1fded9e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e02224a9-e09b-4174-86dd-40a48e4de7e5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/programBatch/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by batchId invalid batchId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ce04306-3c4b-422f-9450-5b21d1fded9e",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "45e31a65-ce93-4553-b8a7-6f3e3217f1a5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/programBatch/{{InvalidBatchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by roleId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9b8f091b-16a8-4a3f-b795-2acda7d2ef35",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(pm.response.code==201){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"Created\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "3904001b-ef4e-4e22-b670-c9997500186f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/users/roles/{{roleId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by roleId invalid roleId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9b8f091b-16a8-4a3f-b795-2acda7d2ef35",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "41f59549-c592-418f-b44e-4fe8fec9a976",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/users/roles/{{InvalidRoleId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get active users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6147728-22c9-4f1f-96ac-82df7b9b6668",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "0bb3511f-9a6e-4a4b-a24c-99baa1e69cc6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/activeUsers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get active users invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6147728-22c9-4f1f-96ac-82df7b9b6668",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c877e2c4-29db-4f94-aac9-498ea9ef4108",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/users/acti"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Users with Facets/Filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c23e92de-c7f3-4da4-a312-a8b146edd293",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a249adf1-4efb-44a5-bc2f-64735ae96a79",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/v2/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Users with Facets/Filters invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c23e92de-c7f3-4da4-a312-a8b146edd293",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b4ff1ee1-e044-4301-bec9-b70ac65f820b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/v2/"
+					},
+					"response": []
+				}
+			],
+			"id": "0a98b11e-f4f0-4e19-8c8f-56a4e22bd59a"
+		},
+		{
+			"name": "Program Controller",
+			"item": [
+				{
+					"name": "ALL Programs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "aa0665af-838f-44f3-bb05-805223e09c2c"
+							}
+						}
+					],
+					"id": "d95740ec-576a-42a1-b805-cbff53b6b7bd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/allPrograms"
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Programs invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aa0665af-838f-44f3-bb05-805223e09c2c",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b3acfee3-c169-4c69-ae47-f206d1d8a97f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/all"
+					},
+					"response": []
+				},
+				{
+					"name": "Get program by program id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ba9ed51a-eaf7-4eb2-8ec3-fb4640347102",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d74bdcd1-f5c4-43e9-80fe-d4cf825460f0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/programs/{{programId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get program by invalid program id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ba9ed51a-eaf7-4eb2-8ec3-fb4640347102",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ab214df4-5018-409a-aff7-5f001af77243",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/programs/{{invalidProgramId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get program by program id invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ba9ed51a-eaf7-4eb2-8ec3-fb4640347102",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1afb28cf-5d98-4f86-8198-c3ae672ca4fa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/pro/{{programId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Programs with users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "141dd1a2-3ed6-46ff-813c-e5fd2836566a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f1198f3b-282a-4a74-82cf-9d3c6687c7b8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/allProgramsWithUsers"
+					},
+					"response": []
+				},
+				{
+					"name": "Programs with users invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "141dd1a2-3ed6-46ff-813c-e5fd2836566a",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6afc7c62-5e3f-4f43-96db-10910d754408",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/allProgramswith"
+					},
+					"response": []
+				},
+				{
+					"name": "Programs with users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "851c1711-1e2f-4a29-bf10-668f86886fcb",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "2ad182f2-e7cf-4331-83cc-c0242604bd31",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/allProgramsWithUsers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get program by program id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c4edb9a8-aef8-41a1-831d-492c5652b6c0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e795b506-9ceb-451e-b60e-353f1750d160",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/programs/{{programId}}"
+					},
+					"response": []
+				}
+			],
+			"id": "a4510cda-e801-46cc-8a36-ab9cfb375961"
+		},
+		{
+			"name": "Program Batch Controller",
+			"item": [
+				{
+					"name": "Get All Batches",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f8c393a-ee70-4fb6-9bc7-640d74054504",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f1e9b361-5354-44e3-bd46-6da9bdb58ce3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/batches"
+					},
+					"response": []
+				},
+				{
+					"name": "Get allbatches with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6cd48e22-c4d7-499c-8cee-64716f871e48",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5cc14b31-29a0-4bec-9ac6-e377c0aa471d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseUrl}}/bat"
+					},
+					"response": []
+				},
+				{
+					"name": "Get batch by batchId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ad678d9c-600b-4835-a034-e3806997e140",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// pm.test(\"Validate message and success\", function () {\r",
+									"//     pm.expect(pm.response.json()).to.be.an('object').that.has.property('message');\r",
+									"//     pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"//     pm.expect(pm.response.json()).to.have.property('success', true);\r",
+									"// });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b76ffb04-6dd5-4875-aa63-6daf867c47ab",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/batches/batchId/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get batch by invalid batchId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ad678d9c-600b-4835-a034-e3806997e140",
+								"exec": [
+									"pm.test('Status code is 404', function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validate message and success\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('message');\r",
+									"    pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"    pm.expect(pm.response.json()).to.have.property('success', false);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "86d1acf8-df5d-4368-997d-06c8a952d88f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/batches/batchId/{{invalide batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get batch by batchId with invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ad678d9c-600b-4835-a034-e3806997e140",
+								"exec": [
+									"pm.test('Status code is 404', function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"})\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "391239f6-e312-4618-90f4-fc7507f082ea",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/batches/batch/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Batch By name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea6c45eb-7638-4162-bd3f-9e609a00f646",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "357fcbb9-f8ac-4b45-b63b-19a8a8d87584",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/batches/batchName/{{batchName}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Batch By invalidname",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea6c45eb-7638-4162-bd3f-9e609a00f646",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "74a4ae13-0f3c-4d2d-a1f5-c80d74491074",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/batches/batchName/{{InvalidBatchName}}"
+					},
+					"response": []
+				}
+			],
+			"id": "557743d5-fe41-46af-b799-338d925cc017"
+		},
+		{
+			"name": "User Role Program Batch Map Controller",
+			"item": [
+				{
+					"name": "Get Assigned Program/Batch(es) of All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68606b1c-1e1c-48ee-8a6f-678b33393791",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "bafefcd1-56d1-485c-be5c-4b6afd10a663",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/userRoleProgramBatchMap"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Assigned Program/Batch(es) of All Users invalid endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68606b1c-1e1c-48ee-8a6f-678b33393791",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "37bf5c39-6555-4577-8472-2075d25aa887",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/BatchMap"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Assigned Program/Batch of a User By User Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f938981-ee8e-4426-a6a5-1098bf4ad9cf",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8066df9c-e7c1-4f58-976c-e63a5d7f5c45",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/userRoleProgramBatchMap/{{createduserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Programs/Batches assigned to the User By UserId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "588771ea-426e-4382-a7a4-1a278ddcd721",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8a8e8a44-e553-4b71-be55-1d22e4199180",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseUrl}}/userRoleProgramBatchMap/deleteAll/{{createduserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Programs/Batches assigned to the User By InvalidUserId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "588771ea-426e-4382-a7a4-1a278ddcd721",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "bc48ad36-2f7b-4161-9079-468b7c68e379",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseUrl}}/userRoleProgramBatchMap/deleteAll/{{InvalidUserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by Program Name",
+					"id": "fd15e482-dca4-4430-86b5-778b1095f1af",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseUrl}}/deletebyprogname/{{programName}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by invalidprogramID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd71658f-f54a-4d07-b090-f8399c2200ac",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7c80355f-f84a-4846-9402-f5f5745cc4ac",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseUrl}}/deletebyprogid/{{invalidProgramId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by validprogramID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94c30cc7-a459-4169-be77-a66758d5eff3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response check\",function(){\r",
+									"    pm.response.text().includes(\" Program Id-\\d+ is deleted Successfully!\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d0c51372-5037-40cf-ad97-e618ae6e34fd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseUrl}}/deletebyprogid/{{programId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f69851a-bf72-49c1-9888-4b7e5cef7f83",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"response check\",function(){\r",
+									"    pm.response.text().includes(\"Deleted User ID\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ae297743-bd4a-456c-8be9-04f92b6f297e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseUrl}}/users/{{createduserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a6ed538d-35b8-4cdd-8234-124dc42bb14b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8a6df18c-2676-4b09-8072-b1868ad124c2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseUrl}}/logoutlms"
+					},
+					"response": []
+				}
+			],
+			"id": "9b1b48a6-277f-4d1e-9d7e-b0c9a14171bd"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "14146fa3-90c4-4dcd-a1c2-9c15eda59f6b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "7684e199-95fe-4e67-abca-68615c853a66",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "teamname",
+			"value": ""
+		},
+		{
+			"key": "serialnumber",
+			"value": ""
+		},
+		{
+			"key": "phonenumber",
+			"value": ""
+		},
+		{
+			"key": "createduserId",
+			"value": ""
+		},
+		{
+			"key": "programName",
+			"value": ""
+		},
+		{
+			"key": "programId",
+			"value": ""
+		},
+		{
+			"key": "invalide batchId",
+			"value": "123"
+		},
+		{
+			"key": "batchId",
+			"value": ""
+		},
+		{
+			"key": "batchName",
+			"value": ""
+		},
+		{
+			"key": "roleId",
+			"value": ""
+		},
+		{
+			"key": "assignedRoleId",
+			"value": "R02"
+		},
+		{
+			"key": "invalidProgramId",
+			"value": "1"
+		},
+		{
+			"key": "updatedProgramDesc",
+			"value": "updated"
+		},
+		{
+			"key": "updatedBatchDesc",
+			"value": "updatedbatchDesc"
+		},
+		{
+			"key": "userLoginEmail",
+			"value": ""
+		},
+		{
+			"key": "userPW",
+			"value": ""
+		},
+		{
+			"key": "InvalidBatchId",
+			"value": "abc"
+		},
+		{
+			"key": "InvalidRoleId",
+			"value": "R005"
+		},
+		{
+			"key": "InvalidBatchName",
+			"value": "12@#"
+		},
+		{
+			"key": "InvalidUserId",
+			"value": "ab123"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "updatedPassword",
+			"value": "updatedPassword"
+		}
+	]
+}
