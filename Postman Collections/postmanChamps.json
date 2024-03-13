@@ -616,7 +616,19 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -658,7 +670,19 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -700,7 +724,19 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -742,7 +778,19 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -784,7 +832,19 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -826,7 +886,19 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -868,7 +940,19 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -910,7 +994,18 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -1677,6 +1772,15 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1776,6 +1880,14 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1842,6 +1954,14 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1875,6 +1995,14 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1914,6 +2042,14 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2004,7 +2140,16 @@
 									"//     pm.expect(pm.response.json()).to.be.an('object').that.has.property('message');\r",
 									"//     pm.expect(pm.response.json().message).to.be.a('string');\r",
 									"//     pm.expect(pm.response.json()).to.have.property('success', true);\r",
-									"// });"
+									"// });\r",
+									"\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -2115,6 +2260,14 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2187,6 +2340,14 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2253,6 +2414,14 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
 									"});"
 								],
 								"type": "text/javascript"
