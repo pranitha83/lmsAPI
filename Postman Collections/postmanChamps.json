@@ -812,7 +812,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "\r\n {\r\n  \"programId\": {{programId}},\r\n  \"roleId\": \"{{assignedRoleId}}\",\r\n  \"userRoleProgramBatches\": [\r\n    {\r\n      \"batchId\": {{batchId}},\r\n      \"userRoleProgramBatchStatus\": \"Active\"\r\n    }\r\n  ]\r\n}\r\n\r\n\r\n\r\n",
+							"raw": "\r\n {\r\n  \"programId\": {{programId}},\r\n  \"roleId\": \"{{assignedRoleId}}\",\r\n  \"userRoleProgramBatches\": [\r\n    {\r\n      \"batchId\": {{batchId}},\r\n      \"userRoleProgramBatchStatus\": \"{{userRoleProgramBatchStatus}}\"\r\n    }\r\n  ]\r\n}\r\n\r\n\r\n\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2804,6 +2804,10 @@
 		{
 			"key": "updatedPassword",
 			"value": "updatedPassword"
+		},
+		{
+			"key": "userRoleProgramBatchStatus",
+			"value": "Active"
 		}
 	]
 }
