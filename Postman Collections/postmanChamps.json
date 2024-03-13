@@ -289,7 +289,8 @@
 									"\r",
 									"pm.test(\"Validate data\"),()=>{\r",
 									"    pm.response.to.have.userFirstName(pm.collectionVariables.get(\"teamname\"));\r",
-									"   \r",
+									"   pm.response.to.have.userLastName(pm.iterationData.get(\"lastname\"));\r",
+									"   pm.response.to.have.userLoginEmail(pm.iterationData.get(\"userEmailId\"));\r",
 									"};\r",
 									"}"
 								],
@@ -312,7 +313,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"userComments\": \"{{comments}}\",\r\n  \"userEduPg\": \"{{EDU PG}}\",\r\n  \"userEduUg\": \"{{EDU UG}}\",\r\n  \"userFirstName\": \"{{teamname}}\",\r\n  \"userId\": \"string\",\r\n  \"userLastName\": \"{{lastname}}\",\r\n  \"userLinkedinUrl\": \"{{linkedinUrl}}\",\r\n  \"userLocation\": \"1234\",\r\n  \"userLogin\": {\r\n    \"loginStatus\": \"123\",\r\n    \"password\": \"{{userPassword}}\",\r\n    \"roleIds\": [\r\n      \"string\"\r\n    ],\r\n    \"status\": \"string\",\r\n    \"userLoginEmail\": \"{{userEmailId}}\"\r\n  },\r\n  \"userMiddleName\": \"{{middlename}}\",\r\n  \"userPhoneNumber\": {{phonenumber}},\r\n  \"userRoleMaps\": [\r\n    {\r\n      \"roleId\": \"{{roleId}}\",\r\n      \"userRoleStatus\": \"{{rolestatus}}\"\r\n    }\r\n  ],\r\n  \"userTimeZone\": \"{{timezone}}\",\r\n  \"userVisaStatus\": \"{{visastatus}}\"\r\n}\r\n\r\n\r\n\r\n\r\n\r\n",
+							"raw": "{\r\n  \"userComments\": \"{{comments}}\",\r\n  \"userEduPg\": \"{{EDU PG}}\",\r\n  \"userEduUg\": \"{{EDU UG}}\",\r\n  \"userFirstName\": \"{{teamname}}\",\r\n  \"userId\": \"string\",\r\n  \"userLastName\": \"{{lastname}}\",\r\n  \"userLinkedinUrl\": \"{{linkedinUrl}}\",\r\n  \"userLocation\": \"string\",\r\n  \"userLogin\": {\r\n    \"loginStatus\": \"string\",\r\n    \"password\": \"{{userPassword}}\",\r\n    \"roleIds\": [\r\n      \"string\"\r\n    ],\r\n    \"status\": \"string\",\r\n    \"userLoginEmail\": \"{{userEmailId}}\"\r\n  },\r\n  \"userMiddleName\": \"{{middlename}}\",\r\n  \"userPhoneNumber\": {{phonenumber}},\r\n  \"userRoleMaps\": [\r\n    {\r\n      \"roleId\": \"{{roleId}}\",\r\n      \"userRoleStatus\": \"{{rolestatus}}\"\r\n    }\r\n  ],\r\n  \"userTimeZone\": \"{{timezone}}\",\r\n  \"userVisaStatus\": \"{{visastatus}}\"\r\n}\r\n\r\n\r\n\r\n\r\n\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
