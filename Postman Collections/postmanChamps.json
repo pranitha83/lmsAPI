@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "98dc40b7-16bd-4c27-88d1-48c34437007d",
+								"id": "e877ac38-d415-407c-bbd9-8c2555c70c2b",
 								"exec": [
 									"// pm.test(\"Status code is 200\", function () {\r",
 									"//     pm.response.to.have.status(200);\r",
@@ -123,7 +123,9 @@
 									"    console.error('Invalid status');\r",
 									"}\r",
 									"    };\r",
-									"}"
+									"}\r",
+									"\r",
+									"//pm.execution.setNextRequest();"
 								],
 								"type": "text/javascript"
 							}
@@ -131,7 +133,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "21038ca2-07c3-44ad-9340-323134d0fb09",
+								"id": "755a68ac-7a3f-4091-a4d5-603508569717",
 								"exec": [
 									""
 								],
