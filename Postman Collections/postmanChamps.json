@@ -562,7 +562,19 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"});"
+									"});\r",
+									"\r",
+									"//status line\r",
+									"if(pm.response.code==200){\r",
+									"pm.test(\"status line \", function () {\r",
+									"    pm.expect(pm.response.status).to.include(\"OK\");\r",
+									"});\r",
+									"\r",
+									"// Header validation\r",
+									"pm.test(\"Content-Type should be application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
